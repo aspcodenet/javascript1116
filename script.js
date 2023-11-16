@@ -3,6 +3,12 @@
 const btnClickMe = document.getElementById("btnClickMe")
 const allPlayersTBody = document.querySelector("#allPlayers tbody")
 //const allPlayersTBody = document.querySelector("#allPlayerstbody")
+const searchPlayer = document.getElementById("searchPlayer")
+
+
+
+
+
 
 
 
@@ -12,6 +18,7 @@ function Player(id, name,jersey,team, position){
     this.jersey = jersey
     this.team = team
     this.position = position
+    this.visible = true
 }
 
 let players = [ 
@@ -28,8 +35,24 @@ const createTableTdOrTh = function(elementType, txt){
     return element
 }
 
+let clickOnButton=function(event){
+    //alert(players[i].name)                        detta funkar fast med sk closures = magi
+    let htmlElementet = event.target   // 
+    console.log(event.target)
+    console.log(event.currentTarget)
+    //alert(htmlElementet.dataset.stefansplayerid)
+}
+
+
+
 const fillTable = function(){
+    while(allPlayersTBody.firstChild){
+        allPlayersTBody.firstChild.remove()
+    }
     for(let i = 0; i < players.length;i++){
+        if(players[i].visible == false){
+            continue
+        }
         //skapa en tr och stoppar in
         let tr = document.createElement("tr")
         // problem = att använda innerHTML rekommenderas inte
@@ -58,11 +81,26 @@ const fillTable = function(){
         tr.appendChild(createTableTdOrTh("td",players[i].jersey))
         tr.appendChild(createTableTdOrTh("td",players[i].position))
         tr.appendChild(createTableTdOrTh("td",players[i].team))
+
+        let td = document.createElement("td")
+        let btn = document.createElement("button")
+        btn.textContent = "EDIT"
+        btn.dataset.stefansplayerid=players[i].id
+        //btn.addEventListener("click",clickOnButton)
+        td.appendChild(btn)
+        tr.appendChild(td)
         
+
+
         allPlayersTBody.appendChild(tr)
+        tr.addEventListener("click",clickOnButton)
     }
 
 }
+
+// EFTER RASTEN 
+// 1. search filter
+// 2. click on row
 
 fillTable()
 
@@ -70,7 +108,20 @@ console.log(players)
 
 
 
-
+searchPlayer.addEventListener("input",function(){ //
+    //
+    // loopar igenom alla players och matchar med searchPlayer.value
+    // och sätter en egenskap på Player som heter visible
+    const searchFor = searchPlayer.value.toLowerCase()
+    for(let i = 0; i < players.length;i++){ 
+        if(players[i].name.toLowerCase().includes(searchFor) || players[i].position.toLowerCase().includes(searchFor) || players[i].team.toLowerCase().includes(searchFor) ){
+            players[i].visible = true                            
+        }else{
+            players[i].visible = false 
+        }
+    }
+    fillTable()
+})
 
 
 
@@ -79,6 +130,9 @@ function clickMe(){
     alert('Jepp');
 }
 btnClickMe.addEventListener("click",clickMe) // börjar prenumeera
+// let x = 4
+// test(1,x)
+// test(1,4)
 
 
 /*
