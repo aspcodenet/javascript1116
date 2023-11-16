@@ -36,7 +36,7 @@ const createTableTdOrTh = function(elementType, txt){
 }
 
 let clickOnButton=function(event){
-    //alert(players[i].name)                        detta funkar fast med sk closures = magi
+    //alert(players[i].name)                        detta funkar fast med sk closures = magi vg
     let htmlElementet = event.target   // 
     console.log(event.target)
     console.log(event.currentTarget)
