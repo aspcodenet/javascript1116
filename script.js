@@ -36,7 +36,6 @@ const createTableTdOrTh = function(elementType, txt){
 }
 
 let clickOnButton=function(event){
-    //alert(players[i].name)                        detta funkar fast med sk closures = magi vg
     let htmlElementet = event.target   // 
     console.log(event.target)
     console.log(event.currentTarget)
@@ -86,14 +85,19 @@ const fillTable = function(){
         let btn = document.createElement("button")
         btn.textContent = "EDIT"
         btn.dataset.stefansplayerid=players[i].id
-        //btn.addEventListener("click",clickOnButton)
+        // btn.addEventListener("click",function(){
+        //       alert(players[i].name)  
+        //       //                      detta funkar fast med sk closures = magi vg
+        // })
+        //  
+
         td.appendChild(btn)
         tr.appendChild(td)
         
 
 
         allPlayersTBody.appendChild(tr)
-        tr.addEventListener("click",clickOnButton)
+        //tr.addEventListener("click",clickOnButton)
     }
 
 }
